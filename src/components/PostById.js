@@ -8,7 +8,7 @@ const PostById = () => {
 
   useEffect(() => {
     getById(id).then(post => setPost(post))
-  }, [])
+  }, [id])
 
   if (!post) {
     return <p>...loading</p>

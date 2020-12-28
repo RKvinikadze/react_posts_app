@@ -8,14 +8,14 @@ const Comments = () => {
 
   useEffect(() => {
     getByPostId(id).then(comment => setComments(comment))
-  }, [])
+  }, [id])
 
   if (!comments) {
     return <p>...loading</p>
   }
   return comments.map(comment => {
     return (
-      <div className="card text-white bg-secondary border-danger" style={{margin: '20px 0'}}>
+      <div className="card text-white bg-secondary border-danger" style={{margin: '20px 0'}} key={comment.id}>
         <div className="card-header">#{comment.id} - {comment.name}</div>
         <div className="card-body">
           <p className="card-text">

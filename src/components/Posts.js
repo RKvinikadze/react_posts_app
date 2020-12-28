@@ -15,7 +15,7 @@ const Posts = () => {
   }, [])
 
   if (!posts) {
-    return <div>...loading</div>
+    return null
   }
 
   const filterPosts = event => {

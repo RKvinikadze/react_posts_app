@@ -13,7 +13,7 @@ const Comments = () => {
   }, [id])
 
   if (!comments) {
-    return <p>...loading</p>
+    return null
   }
   return comments.map(comment => {
     return (

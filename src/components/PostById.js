@@ -13,7 +13,7 @@ const PostById = () => {
   }, [id])
 
   if (!post) {
-    return <p>...loading</p>
+    return null
   }
   return (
     <div className="card text-center" style={{margin: '10px 0'}}>

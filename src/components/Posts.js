@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { getAll } from '../services/post'
 
 const Posts = () => {
   const [posts, setPosts] = useState([])
@@ -8,9 +8,9 @@ const Posts = () => {
   const [input, setInput] = useState('')
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/posts').then(posts => {
-      setPosts(posts.data)
-      setFiltered(posts.data)
+    getAll().then(posts => {
+      setPosts(posts)
+      setFiltered(posts)
     })
   }, [])
 
@@ -18,7 +18,7 @@ const Posts = () => {
     return <div>...loading</div>
   }
 
-  const filterPosts = (event) => {
+  const filterPosts = event => {
     setInput(event.target.value)
     setFiltered(
       posts.filter(post =>
@@ -27,18 +27,50 @@ const Posts = () => {
     )
   }
   return (
-    <div>
-      <div>
-        <input type="text" value={input} onChange={filterPosts} />
+    <div className="container-fluid">
+      <h3>search</h3>
+
+      <div className="input-group mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="find post by title"
+          value={input}
+          onChange={filterPosts}
+        />
+        {input?<button
+          className="btn btn-outline-secondary"
+          type="button"
+          onClick={() => {
+            setFiltered(posts)
+            setInput('')
+          }}
+          style={{border:'none'}}
+        >
+          all posts
+        </button>:null}
       </div>
-      <h2>posts</h2>
+
+      <h3>posts</h3>
       {filtered.map(post => {
         return (
-          <div key={post.id}>
-            {post.title}
-            <Link to={`/posts/${post.id}`}>
-              <button>click here</button>
-            </Link>
+          <div
+            key={post.id}
+            style={{ marginBottom: '10px' }}
+            border="primary"
+            className="card"
+          >
+            <div className="card-body">
+              <div
+                className="card-text"
+                style={{ marginBottom: '10px', fontSize: '20px' }}
+              >
+                {post.title}
+              </div>
+              <Link to={`/posts/${post.id}`}>
+                <button className="btn btn-success">Detailed</button>
+              </Link>
+            </div>
           </div>
         )
       })}

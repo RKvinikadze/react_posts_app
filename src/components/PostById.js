@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getById } from '../services/post'
+import axios from 'axios'
 
 const PostById = () => {
   const id = Number(useParams().id)
   const [post, setPost] = useState(null)
 
   useEffect(() => {
-    getById(id).then(post => setPost(post))
+    axios
+      .get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+      .then(post => setPost(post.data))
   }, [id])
 
   if (!post) {

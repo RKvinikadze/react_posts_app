@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { getAll } from '../services/post'
+import axios from 'axios'
 
 const Posts = () => {
   const [posts, setPosts] = useState([])
@@ -8,9 +8,9 @@ const Posts = () => {
   const [input, setInput] = useState('')
 
   useEffect(() => {
-    getAll().then(posts => {
-      setPosts(posts)
-      setFiltered(posts)
+    axios.get('https://jsonplaceholder.typicode.com/posts').then(posts => {
+      setPosts(posts.data)
+      setFiltered(posts.data)
     })
   }, [])
 
@@ -29,7 +29,6 @@ const Posts = () => {
   return (
     <div className="container-fluid">
       <h3>search</h3>
-
       <div className="input-group mb-3">
         <input
           type="text"
